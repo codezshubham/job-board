@@ -15,12 +15,15 @@ export function MobileNav() {
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     }
 
     return () => {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     };
   }, [open]);
 
@@ -73,12 +76,12 @@ export function MobileNav() {
       {/* Slider Menu */}
       <div
         className={cn(
-          "fixed top-0 right-0 z-50 h-screen w-[85%] max-w-[320px] border-l border-border/50 bg-background/95 backdrop-blur-2xl shadow-2xl transition-transform duration-300 ease-in-out",
+          "fixed top-0 right-0 z-50 flex h-[100dvh] w-[85%] max-w-[320px] flex-col border-l border-border/50 bg-background/95 backdrop-blur-2xl shadow-2xl transition-transform duration-300 ease-in-out",
           open ? "translate-x-0" : "translate-x-full"
         )}
       >
         {/* Header */}
-        <div className="relative border-b border-border/50 p-5">
+        <div className="relative shrink-0 border-b border-border/50 p-5">
           {/* Background Glow */}
           <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-indigo-500/10 to-purple-500/10" />
 
@@ -127,7 +130,7 @@ export function MobileNav() {
         </div>
 
         {/* Navigation */}
-        <div className="flex flex-col gap-2 p-4">
+        <div className="flex flex-1 flex-col gap-2 overflow-y-auto p-4">
           {navItems.map((item) => {
             const Icon = item.icon;
 
@@ -159,7 +162,7 @@ export function MobileNav() {
         </div>
 
         {/* Bottom CTA */}
-        <div className="absolute bottom-0 left-0 right-0 border-t border-border/50 p-4">
+        <div className="relative shrink-0 border-t border-border/50 p-4 mt-auto">
           <Link
             href="/jobs"
             onClick={() => setOpen(false)}
