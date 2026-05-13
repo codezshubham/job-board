@@ -5,6 +5,7 @@ import { useCallback, useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { Search, Briefcase, Tags, Award, Filter, X } from "lucide-react";
 
 export function JobFilters() {
   const router = useRouter();
@@ -12,9 +13,9 @@ export function JobFilters() {
   const searchParams = useSearchParams();
 
   const [search, setSearch] = useState(searchParams.get("search") || "");
-  const [type, setType] = useState(searchParams.get("type") || "");
-  const [category, setCategory] = useState(searchParams.get("category") || "");
-  const [experience, setExperience] = useState(searchParams.get("experience") || "");
+  const [type, setType] = useState(searchParams.get("type") || "All Types");
+  const [category, setCategory] = useState(searchParams.get("category") || "All Categories");
+  const [experience, setExperience] = useState(searchParams.get("experience") || "All Experience Levels");
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -35,13 +36,13 @@ export function JobFilters() {
     if (search) params.set("search", search);
     else params.delete("search");
     
-    if (type && type !== "all") params.set("type", type);
+    if (type && type !== "All Types") params.set("type", type);
     else params.delete("type");
     
-    if (category && category !== "all") params.set("category", category);
+    if (category && category !== "All Categories") params.set("category", category);
     else params.delete("category");
     
-    if (experience && experience !== "all") params.set("experience", experience);
+    if (experience && experience !== "All Experience Levels") params.set("experience", experience);
     else params.delete("experience");
 
     router.push(`${pathname}?${params.toString()}`);
@@ -49,79 +50,112 @@ export function JobFilters() {
 
   const handleClearFilters = () => {
     setSearch("");
-    setType("all");
-    setCategory("all");
-    setExperience("all");
+    setType("All Types");
+    setCategory("All Categories");
+    setExperience("All Experience Levels");
     router.push(pathname);
   };
 
   return (
-    <div className="bg-card border rounded-lg p-4 mb-8 flex flex-col md:flex-row gap-4 items-end flex-wrap">
-      <div className="w-full md:flex-1 md:min-w-[200px]">
-        <label className="text-sm font-medium mb-1 block">Search Jobs</label>
+    <div className="bg-card/60 backdrop-blur-xl border border-border/50 shadow-xl shadow-blue-500/5 rounded-3xl p-5 md:p-6 mb-8 flex flex-col gap-6 transition-all relative overflow-hidden">
+      {/* Decorative gradient blur in background */}
+      <div className="absolute -top-24 -right-24 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+
+      {/* Main Search Bar */}
+      <div className="relative w-full group drop-shadow-sm z-10">
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground transition-colors group-focus-within:text-blue-500" />
         <Input 
-          placeholder="Job title, company, or keywords..." 
+          placeholder="Search job title, company, or keywords..." 
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleApplyFilters()}
+          className="pl-12 h-14 text-base rounded-2xl bg-background/80 border-border/60 focus-visible:ring-blue-500/50 transition-all hover:bg-background"
         />
       </div>
-      
-      <div className="w-full md:w-48">
-        <label className="text-sm font-medium mb-1 block">Employment Type</label>
-        <Select value={type || "all"} onValueChange={(val) => setType(val || "all")}>
-          <SelectTrigger>
-            <SelectValue placeholder="All Types" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Types</SelectItem>
-            <SelectItem value="Full-time">Full-time</SelectItem>
-            <SelectItem value="Part-time">Part-time</SelectItem>
-            <SelectItem value="Contract">Contract</SelectItem>
-            <SelectItem value="Freelance">Freelance</SelectItem>
-            <SelectItem value="Internship">Internship</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
 
-      <div className="w-full md:w-48">
-        <label className="text-sm font-medium mb-1 block">Category</label>
-        <Select value={category || "all"} onValueChange={(val) => setCategory(val || "all")}>
-          <SelectTrigger>
-            <SelectValue placeholder="All Categories" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Categories</SelectItem>
-            <SelectItem value="Engineering">Engineering</SelectItem>
-            <SelectItem value="Design">Design</SelectItem>
-            <SelectItem value="Marketing">Marketing</SelectItem>
-            <SelectItem value="Sales">Sales</SelectItem>
-            <SelectItem value="Product">Product</SelectItem>
-            <SelectItem value="Other">Other</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+      <div className="flex flex-col lg:flex-row gap-5 justify-between lg:items-end z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 w-full flex-1">
+          {/* Employment Type */}
+          <div className="space-y-2">
+            <label className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5 ml-1">
+              <Briefcase className="w-3.5 h-3.5" /> Employment Type
+            </label>
+            <Select value={type || "All Types"} onValueChange={(val) => setType(val || "All Types")}>
+              <SelectTrigger className="h-11 rounded-xl bg-background/60 border-border/60 hover:bg-background transition-colors focus:ring-blue-500/50">
+                <SelectValue placeholder="All Types" />
+              </SelectTrigger>
+              <SelectContent className="rounded-xl border-border/50 shadow-lg">
+                <SelectItem value="All Types">All Types</SelectItem>
+                <SelectItem value="Full-time">Full-time</SelectItem>
+                <SelectItem value="Part-time">Part-time</SelectItem>
+                <SelectItem value="Contract">Contract</SelectItem>
+                <SelectItem value="Freelance">Freelance</SelectItem>
+                <SelectItem value="Internship">Internship</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
 
-      <div className="w-full md:w-48">
-        <label className="text-sm font-medium mb-1 block">Experience</label>
-        <Select value={experience || "all"} onValueChange={(val) => setExperience(val || "all")}>
-          <SelectTrigger>
-            <SelectValue placeholder="Any Experience" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Any Experience</SelectItem>
-            <SelectItem value="Fresher">Fresher</SelectItem>
-            <SelectItem value="1 year">1 year</SelectItem>
-            <SelectItem value="2 years">2 years</SelectItem>
-            <SelectItem value="3 years">3 years</SelectItem>
-            <SelectItem value="5+ years">5+ years</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+          {/* Category */}
+          <div className="space-y-2">
+            <label className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5 ml-1">
+              <Tags className="w-3.5 h-3.5" /> Category
+            </label>
+            <Select value={category || "All Categories"} onValueChange={(val) => setCategory(val || "All Categories")}>
+              <SelectTrigger className="h-11 rounded-xl bg-background/60 border-border/60 hover:bg-background transition-colors focus:ring-blue-500/50">
+                <SelectValue placeholder="All Categories" />
+              </SelectTrigger>
+              <SelectContent className="rounded-xl border-border/50 shadow-lg">
+                <SelectItem value="All Categories">All Categories</SelectItem>
+                <SelectItem value="Engineering">Engineering</SelectItem>
+                <SelectItem value="Design">Design</SelectItem>
+                <SelectItem value="Marketing">Marketing</SelectItem>
+                <SelectItem value="Sales">Sales</SelectItem>
+                <SelectItem value="Product">Product</SelectItem>
+                <SelectItem value="Other">Other</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
 
-      <div className="flex gap-2 w-full md:w-auto mt-2 md:mt-0">
-        <Button onClick={handleApplyFilters} className="w-full md:w-auto">Filter</Button>
-        <Button variant="outline" onClick={handleClearFilters} className="w-full md:w-auto">Clear</Button>
+          {/* Experience */}
+          <div className="space-y-2">
+            <label className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5 ml-1">
+              <Award className="w-3.5 h-3.5" /> Experience
+            </label>
+            <Select value={experience || "All Experience Levels"} onValueChange={(val) => setExperience(val || "All Experience Levels")}>
+              <SelectTrigger className="h-11 rounded-xl bg-background/60 border-border/60 hover:bg-background transition-colors focus:ring-blue-500/50">
+                <SelectValue placeholder="Any Experience" />
+              </SelectTrigger>
+              <SelectContent className="rounded-xl border-border/50 shadow-lg">
+                <SelectItem value="All Experience Levels">Any Experience</SelectItem>
+                <SelectItem value="Fresher">Fresher</SelectItem>
+                <SelectItem value="1 year">1 year</SelectItem>
+                <SelectItem value="2 years">2 years</SelectItem>
+                <SelectItem value="3 years">3 years</SelectItem>
+                <SelectItem value="5+ years">5+ years</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="grid grid-cols-2 gap-3 w-full lg:w-[240px] lg:flex lg:flex-none">
+          <Button 
+            onClick={handleApplyFilters} 
+            className="w-full lg:flex-1 h-11 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 transition-all font-semibold"
+          >
+            <Filter className="w-4 h-4 " />
+            Apply Filter
+          </Button>
+          <Button 
+            variant="outline" 
+            onClick={handleClearFilters} 
+            className="w-full lg:w-auto px-4 h-11 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all border-dashed border-2 hover:border-solid hover:text-foreground font-medium"
+          >
+            <X className="w-4 h-4" aria-label="Clear filters" />
+            <span className="lg:hidden ml-2">Clear</span>
+          </Button>
+        </div>
       </div>
     </div>
   );

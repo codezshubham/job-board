@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       title: `${job.title} | ${job.company}`,
       description: shortDescription,
       url: `/jobs/${slug}`,
-      siteName: "JobBoard.",
+      siteName: "RojgarSync",
       images: job.logo ? [{ url: job.logo, alt: `${job.company} logo` }] : [],
       type: "website",
     },
@@ -137,7 +137,7 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
 
           {(job.experience || job.education || (job.batchEligible && job.batchEligible.length > 0)) && (
             <section className="bg-card border rounded-2xl p-6 md:p-8 shadow-sm">
-              <h2 className="text-2xl font-bold mb-6">Qualifications</h2>
+              <h2 className="text-2xl font-bold mb-6">Eligibility Criteria</h2>
               <div className="space-y-6">
                 {job.experience && (
                   <div className="flex items-start gap-4 text-base">

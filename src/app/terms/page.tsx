@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 export const metadata: Metadata = {
   title: "Terms & Conditions",
-  description: "Review the terms and conditions that govern the use of our job board and related services.",
+  description: "Review the terms and conditions that govern the use of RojgarSync and related services.",
 };
 import { Badge } from "@/components/ui/badge";
 import {

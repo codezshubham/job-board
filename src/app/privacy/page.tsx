@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "Read our privacy policy to understand how we collect, use, and protect your information when you use our job board platform.",
+  description: "Read our privacy policy to understand how we collect, use, and protect your information when you use RojgarSync.",
 };
 import { Badge } from "@/components/ui/badge";
 import {
