@@ -26,6 +26,7 @@ export default function JobForm({ initialData = null }: { initialData?: any }) {
     education: initialData?.education || "",
     workMode: initialData?.workMode || "On-site",
     batchEligible: initialData?.batchEligible || [],
+    closingDate: initialData?.closingDate ? new Date(initialData.closingDate).toISOString().split('T')[0] : "",
     skills: initialData?.skills?.join(", ") || "",
     description: initialData?.description || "",
     slug: initialData?.slug || "",
@@ -126,6 +127,10 @@ export default function JobForm({ initialData = null }: { initialData?: any }) {
         <div className="space-y-2 md:col-span-2">
           <Label htmlFor="applyUrl">Apply URL</Label>
           <Input id="applyUrl" name="applyUrl" type="url" required value={formData.applyUrl} onChange={handleChange} />
+        </div>
+        <div className="space-y-2 md:col-span-2">
+          <Label htmlFor="closingDate">Closing Date (Optional)</Label>
+          <Input id="closingDate" name="closingDate" type="date" value={formData.closingDate} onChange={handleChange} />
         </div>
         <div className="space-y-2 md:col-span-2">
           <Label htmlFor="logo">Company Logo (PNG/JPEG image - optional)</Label>

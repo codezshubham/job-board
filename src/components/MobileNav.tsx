@@ -39,9 +39,29 @@ export function MobileNav() {
       icon: Building2,
     },
     {
-      title: "About",
-      href: "/about",
-      icon: Info,
+      title: "Remote Jobs",
+      href: "/jobs?workMode=Remote",
+      icon: BriefcaseBusiness,
+    },
+    {
+      title: "Fresher Jobs",
+      href: "/jobs?experience=Fresher",
+      icon: BriefcaseBusiness,
+    },
+    {
+      title: "Hybrid Jobs",
+      href: "/jobs?workMode=Hybrid",
+      icon: BriefcaseBusiness,
+    },
+    {
+      title: "Onsite Jobs",
+      href: "/jobs?workMode=On-site",
+      icon: BriefcaseBusiness,
+    },
+    {
+      title: "Experienced Jobs",
+      href: "/jobs?experience=Experienced",
+      icon: BriefcaseBusiness,
     },
   ];
 

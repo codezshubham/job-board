@@ -23,6 +23,7 @@ export default async function JobsPage(props: {
   const type = typeof searchParams?.type === 'string' ? searchParams.type : undefined;
   const category = typeof searchParams?.category === 'string' ? searchParams.category : undefined;
   const experience = typeof searchParams?.experience === 'string' ? searchParams.experience : undefined;
+  const workMode = typeof searchParams?.workMode === 'string' ? searchParams.workMode : undefined;
   const company = typeof searchParams?.company === 'string' ? searchParams.company : undefined;
   const pageParam = typeof searchParams?.page === 'string' ? searchParams.page : '1';
   const currentPage = Math.max(1, parseInt(pageParam, 10) || 1);
@@ -46,7 +47,15 @@ export default async function JobsPage(props: {
     query.category = category;
   }
   if (experience) {
-    query.experience = { $regex: experience, $options: "i" };
+    if (experience.toLowerCase() === 'experienced') {
+      // Find jobs where experience does not contain "fresher"
+      query.experience = { $not: { $regex: "fresher", $options: "i" }, $exists: true, $ne: "" };
+    } else {
+      query.experience = { $regex: experience, $options: "i" };
+    }
+  }
+  if (workMode && workMode !== "all") {
+    query.workMode = workMode;
   }
 
   const allJobs = await getJobs(query);
@@ -61,6 +70,7 @@ export default async function JobsPage(props: {
     if (type) params.set('type', type);
     if (category) params.set('category', category);
     if (experience) params.set('experience', experience);
+    if (workMode) params.set('workMode', workMode);
     if (company) params.set('company', company);
     params.set('page', page.toString());
     return `/jobs?${params.toString()}`;
@@ -152,11 +162,19 @@ export default async function JobsPage(props: {
               </div>
             </CardContent>
             <CardFooter className="pt-0 pb-5 pl-6 pr-6 flex items-center justify-between border-t-0">
-              <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                <CalendarDays className="w-4 h-4" />
-                Posted {new Date(job.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+              <div className="flex flex-col sm:flex-row gap-2 sm:items-center text-sm text-muted-foreground w-full justify-between pr-4">
+                <div className="flex items-center gap-1.5">
+                  <CalendarDays className="w-4 h-4" />
+                  <span>Posted {new Date(job.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                </div>
+                {job.closingDate && (
+                  <div className="flex items-center gap-1.5 text-orange-600 dark:text-orange-400">
+                    <Clock className="w-4 h-4" />
+                    <span>Closes {new Date(job.closingDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                  </div>
+                )}
               </div>
-              <Link href={`/jobs/${job.slug}`} className={`relative z-10 transition-transform group-hover:-translate-y-0.5 group-hover:shadow-md ${buttonVariants({ variant: "default" })}`}>
+              <Link href={`/jobs/${job.slug}`} className={`relative z-10 transition-transform group-hover:-translate-y-0.5 group-hover:shadow-md shrink-0 ${buttonVariants({ variant: "default" })}`}>
                 View Details
               </Link>
             </CardFooter>

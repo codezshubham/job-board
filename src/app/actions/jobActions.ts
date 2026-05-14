@@ -45,6 +45,7 @@ export async function createJob(formData: any) {
     const newJob = new Job({
       ...formData,
       slug,
+      closingDate: formData.closingDate ? new Date(formData.closingDate) : undefined,
       skills: formData.skills.split(",").map((s: string) => s.trim()),
     });
 
@@ -63,6 +64,7 @@ export async function updateJob(id: string, formData: any) {
   try {
     const updateData = {
       ...formData,
+      closingDate: formData.closingDate ? new Date(formData.closingDate) : undefined,
       skills: typeof formData.skills === 'string' ? formData.skills.split(",").map((s: string) => s.trim()) : formData.skills,
     };
     

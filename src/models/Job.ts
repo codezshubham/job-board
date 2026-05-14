@@ -19,6 +19,7 @@ export interface IJob {
   education?: string;
   workMode?: string;
   batchEligible?: string[];
+  closingDate?: Date;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -42,6 +43,7 @@ const JobSchema = new mongoose.Schema<IJob>(
     education: { type: String },
     workMode: { type: String, enum: ["Remote", "Hybrid", "On-site"], default: "On-site" },
     batchEligible: { type: [String], default: [] },
+    closingDate: { type: Date },
   },
   { timestamps: true }
 );

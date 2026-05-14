@@ -65,10 +65,96 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
 
   return (
     <div className="container mx-auto py-12 px-4 max-w-6xl">
-      <Link href="/" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-8 transition-colors">
-        <ChevronLeft className="w-4 h-4 mr-1" />
-        Back to Jobs
-      </Link>
+    <style>{`
+  @keyframes marquee-right {
+    0% {
+      transform: translateX(-100%);
+    }
+
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  .animate-marquee-right {
+    display: inline-flex;
+    align-items: center;
+    min-width: max-content;
+    white-space: nowrap;
+
+    /* Slower Speed */
+    animation: marquee-right 45s linear infinite;
+
+    will-change: transform;
+  }
+
+  .animate-marquee-right:hover {
+    animation-play-state: paused;
+  }
+`}</style>
+<div className="relative mb-8 overflow-hidden rounded-2xl border border-primary/10 bg-gradient-to-r from-primary/5 via-background to-primary/5 shadow-sm">
+
+  <div className="flex items-center gap-4 px-4 py-3">
+
+    {/* Badge */}
+    <div className="shrink-0 rounded-xl bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground shadow-md">
+      JUST IN
+    </div>
+
+    {/* Marquee */}
+    <div
+      className="relative flex-1 overflow-hidden"
+      style={{
+        maskImage:
+          "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
+      }}
+    >
+      <div className="animate-marquee-right">
+
+        {/* Duplicate array for seamless loop */}
+        {[...latestJobs.slice(0, 3), ...latestJobs.slice(0, 3)].map(
+          (recentJob: any, index: number) => (
+            <div
+              key={`${recentJob._id}-${index}`}
+              className="mx-5 flex items-center"
+            >
+              <Link
+                href={`/jobs/${recentJob.slug}`}
+                className="group flex items-center gap-2"
+              >
+                <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+
+                <span className="text-sm font-semibold text-foreground transition-colors group-hover:text-primary">
+                  {recentJob.title}
+                </span>
+
+                <span className="text-sm text-muted-foreground">
+                  at {recentJob.company}
+                </span>
+              </Link>
+
+              <span className="ml-8 text-muted-foreground/30 text-lg">
+                ✦
+              </span>
+            </div>
+          )
+        )}
+      </div>
+    </div>
+
+    {/* Live */}
+    <div className="hidden md:flex items-center gap-2 rounded-full border bg-background/70 px-3 py-1.5 shadow-sm">
+      <span className="relative flex h-2.5 w-2.5">
+        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-75" />
+        <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-500" />
+      </span>
+
+      <span className="text-xs font-medium text-muted-foreground">
+        Live Updates
+      </span>
+    </div>
+  </div>
+</div>
 
       <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-10">
         <div className="flex items-center gap-6">
@@ -240,6 +326,16 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
                     <p className="text-muted-foreground">{new Date(job.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                   </div>
                 </div>
+
+                {job.closingDate && (
+                  <div className="flex items-start gap-3 text-sm">
+                    <CalendarDays className="w-5 h-5 text-muted-foreground shrink-0" />
+                    <div>
+                      <p className="font-medium">Closing Date</p>
+                      <p className="text-muted-foreground">{new Date(job.closingDate).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                    </div>
+                  </div>
+                )}
               </div>
             </CardContent>
           </Card>

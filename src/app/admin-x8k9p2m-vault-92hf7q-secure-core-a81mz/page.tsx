@@ -41,6 +41,7 @@ export default async function AdminDashboard() {
               <TableHead>Company</TableHead>
               <TableHead>Location</TableHead>
               <TableHead>Date Posted</TableHead>
+              <TableHead>Closing Date</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -52,6 +53,9 @@ export default async function AdminDashboard() {
                 <TableCell>{job.location}</TableCell>
                 <TableCell>
                   {new Date(job.createdAt).toLocaleDateString()}
+                </TableCell>
+                <TableCell>
+                  {job.closingDate ? new Date(job.closingDate).toLocaleDateString() : 'N/A'}
                 </TableCell>
                 <TableCell className="text-right">
                   <div className="flex justify-end gap-2">
@@ -72,7 +76,7 @@ export default async function AdminDashboard() {
             ))}
             {jobs.length === 0 && (
               <TableRow>
-                <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
                   No jobs found. Click "Add New Job" to get started.
                 </TableCell>
               </TableRow>
