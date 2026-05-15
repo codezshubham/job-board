@@ -63,22 +63,18 @@ export function JobFilters() {
       <div className="absolute -top-24 -right-24 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="flex flex-col sm:flex-row gap-4 z-10 w-full">
-        {/* Main Search Bar */}
-        <div className="relative w-full flex-1 group drop-shadow-sm">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground transition-colors group-focus-within:text-blue-500" />
-          <Input 
-            placeholder="Search job title, company, or keywords..." 
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleApplyFilters()}
-            className="pl-12 h-14 text-base rounded-2xl bg-background/80 border-border/60 focus-visible:ring-blue-500/50 transition-all hover:bg-background"
-          />
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 z-10 w-full">
+        <div className="flex-1">
+          <h2 className="text-xl md:text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
+            Find Your Next Opportunity
+          </h2>
+          <p className="text-sm text-muted-foreground mt-1">
+            Search and filter through the latest job postings to find the perfect match.
+          </p>
         </div>
-        
         <Button
           variant="outline"
-          className="h-14 rounded-2xl px-6 border-border/60 bg-background/80 hover:bg-background shrink-0"
+          className="h-14 rounded-2xl px-6 border-border/60 bg-background/80 hover:bg-background w-full sm:w-auto shrink-0 shadow-sm"
           onClick={() => setIsFiltersOpen(!isFiltersOpen)}
         >
           <Filter className="w-4 h-4 mr-2" />
@@ -88,9 +84,27 @@ export function JobFilters() {
       </div>
 
       {isFiltersOpen && (
-        <div className="flex flex-col lg:flex-row gap-5 justify-between lg:items-end z-10 animate-in fade-in slide-in-from-top-4 duration-200">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 w-full flex-1">
-            {/* Employment Type */}
+        <div className="flex flex-col gap-5 z-10 animate-in fade-in slide-in-from-top-4 duration-200">
+          {/* Main Search Bar */}
+          <div className="relative w-full group drop-shadow-sm">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground transition-colors group-focus-within:text-blue-500" />
+            <Input 
+              placeholder="Search job title, company, or keywords..." 
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handleApplyFilters();
+                }
+              }}
+              className="pl-12 h-11 text-base rounded-xl bg-background/60 border-border/60 focus-visible:ring-blue-500/50 transition-all hover:bg-background"
+            />
+          </div>
+
+          <div className="flex flex-col lg:flex-row gap-5 justify-between lg:items-end">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 w-full flex-1">
+              {/* Employment Type */}
           <div className="space-y-2">
             <label className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5 ml-1">
               <Briefcase className="w-3.5 h-3.5" /> Employment Type
@@ -169,6 +183,7 @@ export function JobFilters() {
             <X className="w-4 h-4" aria-label="Clear filters" />
             <span className="lg:hidden ml-2">Clear</span>
           </Button>
+        </div>
         </div>
         </div>
       )}

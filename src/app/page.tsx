@@ -41,19 +41,20 @@ export default function Home() {
           </p>
 
           {/* Search Box */}
-          <div className="mt-10 flex w-full max-w-3xl flex-col gap-3 rounded-2xl border bg-background/80 p-3 shadow-2xl backdrop-blur md:flex-row">
-            <div className="flex flex-1 items-center gap-3 rounded-xl border bg-background px-4">
+          <form action="/jobs" className="mt-10 flex w-full max-w-3xl flex-col gap-3 rounded-2xl border bg-background/80 p-3 shadow-2xl backdrop-blur md:flex-row">
+            <div className="flex flex-1 items-center gap-3 rounded-xl border bg-background px-4 focus-within:ring-2 focus-within:ring-primary/20 transition-all">
               <Search className="h-5 w-5 text-muted-foreground" />
 
               <input
+                name="search"
                 type="text"
                 placeholder="Search jobs, companies, skills..."
                 className="h-14 w-full bg-transparent text-sm outline-none"
               />
             </div>
 
-            <Link
-              href="/jobs"
+            <button
+              type="submit"
               className={buttonVariants({
                 size: "lg",
                 className:
@@ -61,8 +62,8 @@ export default function Home() {
               })}
             >
               Search Jobs
-            </Link>
-          </div>
+            </button>
+          </form>
 
           {/* Quick Stats */}
           <div className="mt-10 flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
