@@ -4,10 +4,14 @@ import dbConnect from "@/lib/mongodb";
 import Job from "@/models/Job";
 import { revalidatePath } from "next/cache";
 
-export async function getJobs(query = {}, sort: Record<string, 1 | -1> = { createdAt: -1 }) {
+export async function getJobs(query = {}, sort: Record<string, 1 | -1> = { createdAt: -1 }, limit?: number) {
   await dbConnect();
   try {
-    const jobs = await Job.find(query).sort(sort).lean();
+    let queryBuilder = Job.find(query).sort(sort).lean();
+    if (limit) {
+      queryBuilder = queryBuilder.limit(limit);
+    }
+    const jobs = await queryBuilder;
     return JSON.parse(JSON.stringify(jobs));
   } catch (error) {
     console.error("Failed to fetch jobs", error);

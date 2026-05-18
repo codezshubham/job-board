@@ -48,4 +48,12 @@ const JobSchema = new mongoose.Schema<IJob>(
   { timestamps: true }
 );
 
+// Add indexes to improve query performance
+JobSchema.index({ createdAt: -1 }); // often used for sorting recent jobs
+JobSchema.index({ category: 1 });
+JobSchema.index({ workMode: 1 });
+JobSchema.index({ experience: 1 });
+JobSchema.index({ location: 1 });
+JobSchema.index({ company: 1 });
+
 export default mongoose.models.Job || mongoose.model<IJob>('Job', JobSchema);

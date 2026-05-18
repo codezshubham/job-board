@@ -218,12 +218,38 @@ export default function RootLayout({
 
               {/* Navigation */}
               <nav className="hidden items-center gap-1 md:flex">
-                <Link
-                  href="/jobs"
-                  className="rounded-lg px-4 py-2 text-sm font-medium text-muted-foreground transition-all hover:bg-muted hover:text-foreground"
-                >
-                  Browse Jobs
-                </Link>
+                <div className="group relative">
+                  <Link
+                    href="/jobs"
+                    className="flex shadow-none bg-transparent items-center gap-1 rounded-lg px-4 py-2 text-sm font-medium text-muted-foreground transition-all hover:bg-muted hover:text-foreground"
+                  >
+                    Browse Jobs
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-70 transition-transform group-hover:rotate-180"><path d="m6 9 6 6 6-6"/></svg>
+                  </Link>
+                  {/* Dropdown menu */}
+                  <div className="absolute left-0 top-full pt-1 opacity-0 translate-y-2 invisible group-hover:opacity-100 group-hover:translate-y-0 group-hover:visible transition-all duration-200 z-50">
+                    <div className="w-56 rounded-xl border border-border/50 bg-background/95 backdrop-blur-xl shadow-lg p-2 flex flex-col gap-1">
+                      <Link href="/jobs" className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground">
+                        All Jobs
+                      </Link>
+                      <Link href="/jobs?workMode=Remote" className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground">
+                        Remote Jobs
+                      </Link>
+                      <Link href="/jobs?experience=Fresher" className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground">
+                        Fresher Jobs
+                      </Link>
+                      <Link href="/jobs?workMode=Hybrid" className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground">
+                        Hybrid Jobs
+                      </Link>
+                      <Link href="/jobs?workMode=On-site" className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground">
+                        On-site Jobs
+                      </Link>
+                      <Link href="/jobs?experience=Experienced" className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground">
+                        Experienced Jobs
+                      </Link>
+                    </div>
+                  </div>
+                </div>
 
                 <Link
                   href="/companies"

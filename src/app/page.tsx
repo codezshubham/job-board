@@ -18,47 +18,56 @@ export default function Home() {
   return (
     <div className="flex min-h-[calc(100vh-4rem)] flex-col overflow-hidden">
       {/* HERO SECTION */}
-      <section className="relative overflow-hidden border-b bg-gradient-to-b from-background via-background to-primary/5">
-        {/* Background Blur */}
-        <div className="absolute left-1/2 top-0 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" />
+      <section className="relative overflow-hidden border-b bg-background pt-20 pb-20">
+        {/* Modern grid background */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
+        
+        {/* Glowing gradient blobs */}
+        <div className="absolute left-1/2 top-0 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-primary/20 blur-[120px] mix-blend-normal" />
+        <div className="absolute right-0 top-40 h-[300px] w-[300px] rounded-full bg-blue-500/10 blur-[100px] mix-blend-normal" />
 
-        <div className="container relative mx-auto flex max-w-7xl flex-col items-center px-4 py-24 text-center md:py-24">
+        <div className="container relative mx-auto flex max-w-7xl flex-col items-center px-4 text-center">
           {/* Badge */}
-          <Badge className="mb-6 rounded-full border border-primary/20 bg-primary/10 px-4 py-1 text-sm text-primary hover:bg-primary/20">
-            🚀 12,000+ Active Jobs Updated Daily
-          </Badge>
+          <div className="inline-flex items-center gap-3 mb-8 rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-sm text-primary transition-colors hover:bg-primary/10">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
+              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-primary" />
+            </span>
+            <span className="font-semibold tracking-wide">12,000+ Active Jobs Updated Daily</span>
+          </div>
 
           {/* Heading */}
-          <h1 className="max-w-5xl text-5xl font-black tracking-tight md:text-7xl lg:text-8xl">
-            Discover Your
-            <span className="block text-primary">Next Career Move</span>
+          <h1 className="max-w-5xl text-5xl font-extrabold tracking-tight md:text-7xl lg:text-[5.5rem] leading-[1.1]">
+            Discover Your <br className="hidden md:block" />
+            <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-500 to-indigo-600 mt-2 pb-2">
+              Next Career Move
+              <Sparkles className="absolute -right-12 -top-4 h-8 w-8 text-blue-500 animate-pulse hidden md:block" />
+            </span>
           </h1>
 
           {/* Subtitle */}
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
+          <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
             Explore fresh opportunities from top startups and companies. Find
             remote, hybrid, and on-site jobs tailored to your skills.
           </p>
 
           {/* Search Box */}
-          <form action="/jobs" className="mt-10 flex w-full max-w-3xl flex-col gap-3 rounded-2xl border bg-background/80 p-3 shadow-2xl backdrop-blur md:flex-row">
-            <div className="flex flex-1 items-center gap-3 rounded-xl border bg-background px-4 focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+          <form action="/jobs" className="mt-12 flex w-full max-w-3xl flex-col gap-3 rounded-3xl border bg-background/60 p-3 shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-xl md:flex-row transition-shadow hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
+            <div className="flex flex-1 items-center gap-3 rounded-2xl bg-muted/50 px-5 transition-all focus-within:bg-background focus-within:ring-2 focus-within:ring-primary/20">
               <Search className="h-5 w-5 text-muted-foreground" />
-
               <input
                 name="search"
                 type="text"
                 placeholder="Search jobs, companies, skills..."
-                className="h-14 w-full bg-transparent text-sm outline-none"
+                className="h-14 w-full bg-transparent text-base outline-none placeholder:text-muted-foreground/70"
               />
             </div>
-
             <button
               type="submit"
               className={buttonVariants({
                 size: "lg",
                 className:
-                  "h-14 rounded-xl px-8 text-base font-semibold shadow-lg transition-all hover:scale-[1.02]",
+                  "h-14 rounded-2xl px-10 text-base font-semibold shadow-xl transition-all hover:scale-[1.02] active:scale-95",
               })}
             >
               Search Jobs
@@ -66,19 +75,17 @@ export default function Home() {
           </form>
 
           {/* Quick Stats */}
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 text-primary" />
+          <div className="mt-14 flex flex-wrap items-center justify-center gap-x-6 gap-y-4 text-sm font-medium text-muted-foreground">
+            <div className="flex items-center gap-2.5 rounded-full border bg-background/50 backdrop-blur-sm px-5 py-2.5 shadow-sm">
+              <CheckCircle2 className="h-5 w-5 text-green-500" />
               Remote Friendly
             </div>
-
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 text-primary" />
+            <div className="flex items-center gap-2.5 rounded-full border bg-background/50 backdrop-blur-sm px-5 py-2.5 shadow-sm">
+              <CheckCircle2 className="h-5 w-5 text-blue-500" />
               Verified Companies
             </div>
-
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 text-primary" />
+            <div className="flex items-center gap-2.5 rounded-full border bg-background/50 backdrop-blur-sm px-5 py-2.5 shadow-sm">
+              <CheckCircle2 className="h-5 w-5 text-indigo-500" />
               Daily New Jobs
             </div>
           </div>

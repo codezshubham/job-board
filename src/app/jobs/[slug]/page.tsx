@@ -17,6 +17,27 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${job.title} at ${job.company}`,
     description: shortDescription,
+      keywords: [
+      job.title,
+      job.company,
+      job.location || "",
+      "jobs",
+      "latest jobs",
+      "software jobs",
+      "remote jobs",
+      "hybrid jobs",
+      "on-site jobs",
+      "freshers jobs",
+      "graduate jobs",
+      "internship jobs",
+      "entry-level jobs",
+      "experienced jobs",
+      "IT jobs",
+      "job portal",
+      "RojgarSync",
+      `${job.title} jobs`,
+      `${job.company} careers`,
+    ],
     openGraph: {
       title: `${job.title} | ${job.company}`,
       description: shortDescription,
@@ -36,14 +57,20 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function JobPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const job = await getJobBySlug(slug);
-  const allJobs = await getJobs();
+  
+  // Use Promise.all to fetch the job details AND the latest jobs concurrently 
+  // instead of waiting for one to finish before starting the other.
+  const [job, latestJobsData] = await Promise.all([
+    getJobBySlug(slug),
+    getJobs({}, { createdAt: -1 }, 6)
+  ]);
 
   if (!job) {
     notFound();
   }
 
-  const latestJobs = allJobs.filter((j: any) => j._id !== job._id).slice(0, 5);
+  // Filter out the current job from the recent jobs list
+  const latestJobs = latestJobsData.filter((j: any) => j._id !== job._id).slice(0, 5);
 
   // Helper to render text with newlines as a bulleted list
   const renderBulletList = (text: string) => {
