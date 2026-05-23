@@ -298,7 +298,7 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
           </div>
         </div>
 
-        <div className="lg:col-span-1 space-y-6 lg:sticky lg:top-24 order-1 lg:order-2">
+        <div className="lg:col-span-1 space-y-6 lg:top-24 order-1 lg:order-2">
           <Card className="shadow-sm border-primary/10 border-2">
             <CardContent className="p-6">
               <div className="space-y-4">

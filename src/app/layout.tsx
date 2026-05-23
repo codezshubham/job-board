@@ -271,13 +271,13 @@ export default function RootLayout({
                 <ThemeToggle />
 
                 <Link
-                  href="/jobs"
+                  href="/subscribe"
                   className={cn(
                     buttonVariants({ variant: "default" }),
                     "md:inline-flex hidden rounded-xl px-5 shadow-md transition-all hover:scale-105 hover:shadow-lg",
                   )}
                 >
-                  Try Now
+                  Subscribe Now
                 </Link>
 
                 <div className="md:hidden flex items-center">

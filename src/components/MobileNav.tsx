@@ -184,7 +184,7 @@ export function MobileNav() {
         {/* Bottom CTA */}
         <div className="relative shrink-0 border-t border-border/50 p-4 mt-auto">
           <Link
-            href="/jobs"
+            href="/subscribe"
             onClick={() => setOpen(false)}
             className={buttonVariants({
               variant: "default",
@@ -192,7 +192,7 @@ export function MobileNav() {
                 "h-12 w-full rounded-2xl bg-foreground text-background text-base font-semibold shadow-lg transition-all hover:scale-[1.02] hover:opacity-90",
             })}
           >
-            Try Now
+            Subscribe Now
           </Link>
         </div>
       </div>
