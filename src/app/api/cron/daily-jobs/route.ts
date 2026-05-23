@@ -7,7 +7,7 @@ import { sendEmail } from '@/lib/brevo';
 export async function GET(request: Request) {
   // Validate standard Vercel CRON secret if available
   const authHeader = request.headers.get('authorization');
-  if (process.env.CRON_SECRET && authHeader !== \`Bearer \${process.env.CRON_SECRET}\`) {
+  if (process.env.CRON_SECRET && authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
@@ -37,30 +37,30 @@ export async function GET(request: Request) {
     }
 
     // 3. Construct Email Template
-    let jobsListHtml = newJobs.map(job => \`
+    let jobsListHtml = newJobs.map(job => `
       <div style="padding: 10px; border-bottom: 1px solid #ddd;">
-        <h3>\${job.title} at \${job.company}</h3>
-        <a href="\${process.env.NEXT_PUBLIC_SITE_URL}/jobs/\${job.slug}" style="display:inline-block; padding: 8px 15px; background: #007bff; color: white; text-decoration: none; border-radius: 4px;">View Job</a>
+        <h3>${job.title} at ${job.company}</h3>
+        <a href="${process.env.NEXT_PUBLIC_SITE_URL}/jobs/${job.slug}" style="display:inline-block; padding: 8px 15px; background: #007bff; color: white; text-decoration: none; border-radius: 4px;">View Job</a>
       </div>
-    \`).join('');
+    `).join('');
 
-    const subject = \`\${newJobs.length} New Job Postings Today!\`;
+    const subject = `${newJobs.length} New Job Postings Today!`;
 
     // 4. Send Emails securely using a loop (batch sending in Brevo) or one-by-one
     // For smaller lists, one by one is fine. For larger, look into Brevo's bulk email API.
     for (const sub of subscribers) {
-      const unsubscribeUrl = \`\${process.env.NEXT_PUBLIC_SITE_URL}/api/subscribe/unsubscribe?email=\${encodeURIComponent(sub.email)}\`;
+      const unsubscribeUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/api/subscribe/unsubscribe?email=${encodeURIComponent(sub.email)}`;
       
-      const htmlContent = \`
+      const htmlContent = `
         <h2>Here are today's job updates!</h2>
-        \${jobsListHtml}
+        ${jobsListHtml}
         <br/><br/>
         <hr/>
         <p style="font-size: 12px; color: #666;">
           You are receiving this because you subscribed to daily job alerts. 
-          <a href="\${unsubscribeUrl}">Unsubscribe</a>
+          <a href="${unsubscribeUrl}">Unsubscribe</a>
         </p>
-      \`;
+      `;
 
       await sendEmail(sub.email, subject, htmlContent);
     }
