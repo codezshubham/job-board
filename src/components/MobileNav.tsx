@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X, BriefcaseBusiness, Building2, Info } from "lucide-react";
+import { Menu, X, BriefcaseBusiness, Building2, Newspaper } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -37,6 +37,11 @@ export function MobileNav() {
       title: "Companies",
       href: "/companies",
       icon: Building2,
+    },
+    {
+      title: "Articles",
+      href: "/articles",
+      icon: Newspaper,
     },
     {
       title: "Remote Jobs",

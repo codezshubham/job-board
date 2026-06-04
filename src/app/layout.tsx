@@ -266,6 +266,13 @@ export default function RootLayout({
                 </Link>
 
                 <Link
+                  href="/articles"
+                  className="rounded-lg px-4 py-2 text-sm font-medium text-muted-foreground transition-all hover:bg-muted hover:text-foreground"
+                >
+                  Articles
+                </Link>
+
+                <Link
                   href="/about"
                   className="rounded-lg px-4 py-2 text-sm font-medium text-muted-foreground transition-all hover:bg-muted hover:text-foreground"
                 >
