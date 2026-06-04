@@ -4,6 +4,8 @@ export const sendEmail = async (
   htmlContent: string
 ) => {
   try {
+    const senderEmail = process.env.BREVO_SENDER_EMAIL || "rojgarsync@gmail.com";
+
     const response = await fetch("https://api.brevo.com/v3/smtp/email", {
       method: "POST",
       headers: {
@@ -13,7 +15,7 @@ export const sendEmail = async (
       body: JSON.stringify({
         sender: {
           name: "Rojgar Sync Notifications",
-          email: "notifications@yourdomain.com", // Remember to change this to your verified sender!
+          email: senderEmail,
         },
         to: [{ email: toEmail }],
         subject: subject,

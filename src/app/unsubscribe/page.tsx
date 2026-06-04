@@ -64,7 +64,7 @@ export default function UnsubscribePage() {
   };
 
    return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-6 relative overflow-hidden">
+    <div className="relative flex overflow-hidden bg-background px-6 pt-3 pb-5 md:pt-5 md:pb-8">
 
       {/* BACKGROUND GLOW */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -72,10 +72,10 @@ export default function UnsubscribePage() {
         <div className="absolute -right-40 bottom-10 w-[500px] h-[500px] bg-orange-500/10 blur-3xl rounded-full" />
       </div>
 
-      <div className="relative w-full max-w-6xl flex flex-col lg:flex-row items-center justify-between gap-16">
+      <div className="relative mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-6 lg:flex-row lg:items-start lg:gap-10">
 
         {/* ================= LEFT SIDE ================= */}
-        <div className="hidden lg:flex flex-col w-1/2 items-center justify-center gap-10">
+        <div className="hidden w-full lg:flex lg:w-1/2 flex-col items-center justify-start gap-10">
 
           {/* IMAGE ONLY - NO BACKGROUND/OVERLAY */}
           <div className="relative max-w-[480px] w-full">
@@ -84,14 +84,14 @@ export default function UnsubscribePage() {
               alt="Unsubscribe illustration"
               width={520}
               height={520}
-              className="w-full h-auto object-contain drop-shadow-xl transform rotate-[-3deg]"
+              className="w-full h-auto object-contain drop-shadow-xl lg:-mt-20 rotate-[-3deg]"
               priority
             />
           </div>
         </div>
 
         {/* ================= RIGHT SIDE ================= */}
-        <div className="flex-1 flex justify-center w-full">
+        <div className="flex w-full justify-center lg:w-1/2">
 
           <div className="w-full max-w-md">
 

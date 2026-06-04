@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import Subscriber from '@/models/Subscriber';
+import PendingSubscriber from '@/models/PendingSubscriber';
 
 export async function POST(request: Request) {
   try {
@@ -12,28 +13,30 @@ export async function POST(request: Request) {
 
     await connectDB();
 
-    const subscriber = await Subscriber.findOne({ email: email.toLowerCase() });
+    const pendingSubscriber = await PendingSubscriber.findOne({ email: email.toLowerCase() });
 
-    if (!subscriber) {
-      return NextResponse.json({ error: 'Subscriber not found' }, { status: 404 });
+    if (!pendingSubscriber) {
+      return NextResponse.json({ error: 'No pending verification found for this email' }, { status: 404 });
     }
 
-    if (subscriber.otp !== otp) {
+    if (pendingSubscriber.otp !== otp) {
       return NextResponse.json({ error: 'Invalid OTP' }, { status: 400 });
     }
 
-    if (new Date() > new Date(subscriber.otpExpiresAt)) {
+    if (new Date() > new Date(pendingSubscriber.otpExpiresAt)) {
       return NextResponse.json({ error: 'OTP has expired' }, { status: 400 });
     }
 
-    // Verify successfully
-    await Subscriber.updateOne(
-      { _id: subscriber._id },
-      { 
-        $set: { isVerified: true },
-        $unset: { otp: "", otpExpiresAt: "" } 
-      }
+    await Subscriber.findOneAndUpdate(
+      { email: email.toLowerCase() },
+      {
+        $set: { email: email.toLowerCase(), isVerified: true },
+        $unset: { otp: "", otpExpiresAt: "" },
+      },
+      { upsert: true, returnDocument: 'after' }
     );
+
+    await PendingSubscriber.deleteOne({ _id: pendingSubscriber._id });
 
     return NextResponse.json({ message: 'Successfully subscribed to job notifications!' }, { status: 200 });
   } catch (error) {

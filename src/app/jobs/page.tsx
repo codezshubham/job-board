@@ -28,6 +28,30 @@ export default async function JobsPage(props: {
   const pageParam = typeof searchParams?.page === 'string' ? searchParams.page : '1';
   const currentPage = Math.max(1, parseInt(pageParam, 10) || 1);
 
+  const formatLabel = (value: string) =>
+    value
+      .split(/[\s-]+/)
+      .filter(Boolean)
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(" ");
+
+  const activeLabel =
+    (search && search.trim()) ||
+    (company && company.trim()) ||
+    (category && category !== "all" ? category : undefined) ||
+    (type && type !== "all" ? type : undefined) ||
+    (workMode && workMode !== "all" ? workMode : undefined) ||
+    (experience && experience.trim()) ||
+    undefined;
+
+  const pageTitle = activeLabel
+    ? `${formatLabel(activeLabel)} Jobs`
+    : "Browse All Jobs";
+
+  const pageDescription = activeLabel
+    ? `Showing job results for ${formatLabel(activeLabel)}.`
+    : "Explore the latest opportunities shaping remote and on-site careers.";
+
   const query: any = {};
   if (search) {
     query.$or = [
@@ -80,10 +104,10 @@ export default async function JobsPage(props: {
     <div className="container mx-auto py-12 px-4 max-w-5xl">
       <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-bold tracking-tighter">
-          Browse All Jobs
+          {pageTitle}
         </h1>
         <p className="text-lg text-muted-foreground max-w-[600px]">
-          Explore the latest opportunities shaping remote and on-site careers.
+          {pageDescription}
         </p>
       </div>
 

@@ -65,16 +65,8 @@ export async function GET(request: Request) {
       await sendEmail(sub.email, subject, htmlContent);
     }
 
-    // 5. Clean up old jobs (older than 5 days)
-    const fiveDaysAgo = new Date();
-    fiveDaysAgo.setDate(fiveDaysAgo.getDate() - 5);
-    
-    await Job.deleteMany({
-      createdAt: { $lt: fiveDaysAgo }
-    });
-
     return NextResponse.json({ 
-      message: 'Emails sent successfully and old jobs cleaned up',
+      message: "Today's job emails sent successfully",
       emailsSent: subscribers.length,
       jobsIncluded: newJobs.length
     }, { status: 200 });

@@ -30,8 +30,8 @@ export default function ContactPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="text-center pt-4">
-            <a href="mailto:support@rojgarsync.com" className="text-lg font-medium text-primary hover:underline">
-              support@rojgarsync.com
+            <a href="mailto:rojgarsync@gmail.com" className="text-lg font-medium text-primary hover:underline">
+              rojgarsync@gmail.com
             </a>
           </CardContent>
         </Card>

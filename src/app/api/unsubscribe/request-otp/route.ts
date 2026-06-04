@@ -20,6 +20,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Email not found in our subscriber list' }, { status: 404 });
     }
 
+    if (!subscriber.isVerified) {
+      return NextResponse.json({ error: 'Only verified subscribers can request an unsubscribe OTP' }, { status: 403 });
+    }
+
     // Generate a 6-digit OTP
     const otp = crypto.randomInt(100000, 999999).toString();
     console.log("=== GENERATED UNSUBSCRIBE OTP FOR TESTING ===", otp);
