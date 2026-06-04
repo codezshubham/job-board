@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Image from "next/image";
-import Script from "next/script";
 import "./globals.css";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
@@ -181,14 +180,14 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased overflow-x-hidden`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground overflow-x-hidden">
-        <Script
-          id="google-adsense"
+      <head>
+        <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7892872345424109"
           crossOrigin="anonymous"
-          strategy="beforeInteractive"
         />
+      </head>
+      <body className="min-h-full flex flex-col bg-background text-foreground overflow-x-hidden">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
