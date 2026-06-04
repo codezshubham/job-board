@@ -84,7 +84,7 @@ export default async function JobsPage(props: {
 
   const allJobs = await getJobs(query);
   
-  const ITEMS_PER_PAGE = 4;
+  const ITEMS_PER_PAGE = 8;
   const totalPages = Math.ceil(allJobs.length / ITEMS_PER_PAGE);
   const paginatedJobs = allJobs.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
 

@@ -150,6 +150,8 @@ export function Footer() {
             <Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
             <span className="h-4 w-px bg-border"></span>
             <Link href="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
+            <span className="h-4 w-px bg-border"></span>
+            <Link href="/disclaimer" className="hover:text-primary transition-colors">Disclaimer</Link>
           </div>
         </div>
       </div>

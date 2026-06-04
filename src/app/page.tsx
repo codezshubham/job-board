@@ -13,6 +13,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { HomeFaqs } from "@/components/HomeFaqs";
 
 export default function Home() {
   return (
@@ -245,6 +246,8 @@ export default function Home() {
           </CardContent>
         </Card>
       </section>
+
+      <HomeFaqs />
     </div>
   );
 }
