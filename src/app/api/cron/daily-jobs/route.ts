@@ -13,6 +13,11 @@ export async function GET(request: Request) {
 
   try {
     await connectDB();
+    const siteUrl = (
+      process.env.NEXT_PUBLIC_APP_URL ||
+      process.env.NEXT_PUBLIC_SITE_URL ||
+      new URL(request.url).origin
+    ).replace(/\/$/, '');
 
     // 1. Get today's jobs
     const today = new Date();
@@ -37,10 +42,10 @@ export async function GET(request: Request) {
     }
 
     // 3. Construct Email Template
-    let jobsListHtml = newJobs.map(job => `
+    const jobsListHtml = newJobs.map(job => `
       <div style="padding: 10px; border-bottom: 1px solid #ddd;">
         <h3>${job.title} at ${job.company}</h3>
-        <a href="${process.env.NEXT_PUBLIC_SITE_URL}/jobs/${job.slug}" style="display:inline-block; padding: 8px 15px; background: #007bff; color: white; text-decoration: none; border-radius: 4px;">View Job</a>
+        <a href="${siteUrl}/jobs/${job.slug}" style="display:inline-block; padding: 8px 15px; background: #007bff; color: white; text-decoration: none; border-radius: 4px;">View Job</a>
       </div>
     `).join('');
 
@@ -49,7 +54,7 @@ export async function GET(request: Request) {
     // 4. Send Emails securely using a loop (batch sending in Brevo) or one-by-one
     // For smaller lists, one by one is fine. For larger, look into Brevo's bulk email API.
     for (const sub of subscribers) {
-      const unsubscribeUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/api/subscribe/unsubscribe?email=${encodeURIComponent(sub.email)}`;
+      const unsubscribeUrl = `${siteUrl}/api/subscribe/unsubscribe?email=${encodeURIComponent(sub.email)}`;
       
       const htmlContent = `
         <h2>Here are today's job updates!</h2>
