@@ -9,6 +9,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
+import { JobFiltersSkeleton } from "@/components/page-skeletons";
 import { MapPin, IndianRupee, Clock, Building2, Briefcase, CalendarDays } from "lucide-react";
 import { JobFilters } from "@/components/JobFilters";
 import { Suspense } from "react";
@@ -111,7 +112,7 @@ export default async function JobsPage(props: {
         </p>
       </div>
 
-      <Suspense fallback={<div>Loading filters...</div>}>
+      <Suspense fallback={<JobFiltersSkeleton />}>
         <JobFilters />
       </Suspense>
 
