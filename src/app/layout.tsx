@@ -9,6 +9,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { MobileNav } from "@/components/MobileNav";
 import { Footer } from "@/components/Footer";
+import { TelegramCta } from "@/components/TelegramCta";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -300,7 +301,10 @@ export default function RootLayout({
               </div>
             </div>
           </header>
-          <main className="flex-1">{children}</main>
+          <main className="flex-1">
+            {children}
+            <TelegramCta />
+          </main>
           <Footer />
         </ThemeProvider>
       </body>

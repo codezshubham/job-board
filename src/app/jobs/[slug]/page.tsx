@@ -3,7 +3,8 @@ import { notFound } from "next/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MapPin, IndianRupee, Clock, Briefcase, ExternalLink, ChevronLeft, GraduationCap, CalendarDays, Building2, Tag, Globe, Users } from "lucide-react";
+import { TelegramIcon } from "@/components/TelegramCta";
+import { MapPin, IndianRupee, Clock, Briefcase, ExternalLink, ChevronLeft, GraduationCap, CalendarDays, Building2, Tag, Globe, Users, Send } from "lucide-react";
 import Link from "next/link";
 import { Metadata } from "next";
 
@@ -221,6 +222,25 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
               {renderBulletList(job.description)}
             </div>
           </section>
+
+          <div className="flex justify-center">
+            <Link
+              href="https://t.me/rojgarsyncjobs"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={buttonVariants({
+                size: "lg",
+                className:
+                  "h-16 rounded-full !bg-blue-600 px-10 text-xl font-semibold text-white shadow-lg shadow-blue-500/30 transition-all hover:scale-[1.02] hover:!bg-blue-700",
+              })}
+            >
+              <span className="flex items-center gap-2">
+                <TelegramIcon className="size-6" />
+                Join Telegram
+                <Send className="size-5" />
+              </span>
+            </Link>
+          </div>
 
           {job.rolesAndResponsibilities && (
             <section className="bg-card border rounded-2xl p-6 md:p-8 shadow-sm">
