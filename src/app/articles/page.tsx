@@ -15,21 +15,53 @@ import {
   Clock3,
   LucideIcon,
 } from "lucide-react";
-import { articles } from "@/lib/articles";
+import { Article, articles } from "@/lib/articles";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Articles",
+export const metadata: Metadata = createPageMetadata({
+  title: "Career Articles and Job Search Guides",
   description:
-    "Read practical career articles on government jobs, resumes for freshers, job search websites, campus placements, and choosing between private and government jobs.",
-};
+    "Read in-depth career guides on resumes, interviews, internships, job search strategy, application tracking, and avoiding job scams on RojgarSync.",
+  canonical: "/articles",
+  keywords: [
+    "career articles",
+    "job search guides",
+    "resume tips",
+    "interview preparation",
+    "job scam awareness",
+    "RojgarSync articles",
+  ],
+});
 
-const iconMap: Record<string, LucideIcon> = {
+const slugIconMap: Record<string, LucideIcon> = {
   "how-to-apply-for-government-jobs": Landmark,
   "resume-tips-for-freshers": FileText,
   "best-websites-for-job-search": Search,
   "how-to-prepare-for-campus-placement": GraduationCap,
   "private-job-vs-government-job": BriefcaseBusiness,
 };
+
+const categoryIconMap: Record<string, LucideIcon> = {
+  "Government Jobs": Landmark,
+  "Resume Writing": FileText,
+  "Job Search": Search,
+  "Campus Placement": GraduationCap,
+  "Career Choice": BriefcaseBusiness,
+  "Job Safety": BookOpen,
+  "Fresher Skills": BriefcaseBusiness,
+  "Application Strategy": Search,
+  Internships: GraduationCap,
+  "Aptitude Prep": BookOpen,
+  Networking: Sparkles,
+  "Fresher Careers": BriefcaseBusiness,
+  "Career Basics": BookOpen,
+  "Interview Prep": BookOpen,
+  "Student Careers": GraduationCap,
+};
+
+function getArticleIcon(article: Article) {
+  return slugIconMap[article.slug] ?? categoryIconMap[article.category] ?? BookOpen;
+}
 
 export default function ArticlesPage() {
   return (
@@ -52,10 +84,22 @@ export default function ArticlesPage() {
             </h1>
 
             <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground">
-              Explore practical guides on resumes, government jobs, campus
-              placements, job search strategy, and career choices so you can
-              apply with more clarity and confidence.
+              Explore {articles.length} practical guides on resumes,
+              internships, interview preparation, job search strategy, and job
+              safety so you can apply with more clarity and confidence.
             </p>
+
+            <div className="flex flex-wrap items-center justify-center gap-3 pt-2 text-sm text-muted-foreground">
+              <div className="rounded-full border bg-background/80 px-4 py-2">
+                {articles.length} in-depth guides
+              </div>
+              <div className="rounded-full border bg-background/80 px-4 py-2">
+                Fresher-friendly topics
+              </div>
+              <div className="rounded-full border bg-background/80 px-4 py-2">
+                Real application advice
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -63,7 +107,7 @@ export default function ArticlesPage() {
       <section className="container mx-auto max-w-6xl px-4 py-16">
         <div className="grid gap-6 lg:grid-cols-2">
           {articles.map((article) => {
-            const Icon = iconMap[article.slug];
+            const Icon = getArticleIcon(article);
 
             return (
               <Link

@@ -1,17 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import Image from "next/image";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { createJob, updateJob } from "@/app/actions/jobActions";
+import type { JobMutationInput, SerializedJob } from "@/lib/job-types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-export default function JobForm({ initialData = null }: { initialData?: any }) {
+type JobFormProps = {
+  initialData?: SerializedJob | null;
+};
+
+export default function JobForm({ initialData = null }: JobFormProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<JobMutationInput>({
     title: initialData?.title || "",
     company: initialData?.company || "",
     location: initialData?.location || "",
@@ -32,23 +38,23 @@ export default function JobForm({ initialData = null }: { initialData?: any }) {
     slug: initialData?.slug || "",
   });
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleFileChange = (e: any) => {
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setFormData({ ...formData, logo: reader.result as string });
+        setFormData((prev) => ({ ...prev, logo: reader.result as string }));
       };
       reader.readAsDataURL(file);
     }
   };
 
   const handleBatchChange = (year: string) => {
-    setFormData((prev: any) => {
+    setFormData((prev) => {
       const currentBatches = prev.batchEligible || [];
       if (currentBatches.includes(year)) {
         return { ...prev, batchEligible: currentBatches.filter((y: string) => y !== year) };
@@ -58,7 +64,7 @@ export default function JobForm({ initialData = null }: { initialData?: any }) {
     });
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
@@ -138,7 +144,14 @@ export default function JobForm({ initialData = null }: { initialData?: any }) {
           {formData.logo && (
             <div className="mt-2">
               <span className="text-xs text-muted-foreground block mb-1">Preview:</span>
-              <img src={formData.logo} alt="Logo preview" className="h-16 object-contain border p-1 rounded bg-white" />
+              <Image
+                src={formData.logo}
+                alt="Logo preview"
+                width={64}
+                height={64}
+                unoptimized
+                className="h-16 w-16 object-contain border p-1 rounded bg-white"
+              />
             </div>
           )}
         </div>

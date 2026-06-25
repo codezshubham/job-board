@@ -1,11 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { ArrowLeft, Mail, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, Mail, ShieldAlert, CheckCircle2 } from "lucide-react";
 
-export default function SubscribePageClient() {
+export default function UnsubscribePageClient() {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [step, setStep] = useState<"email" | "otp" | "success">("email");
@@ -19,7 +19,7 @@ export default function SubscribePageClient() {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch("/api/subscribe/request-otp", {
+      const res = await fetch("/api/unsubscribe/request-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -45,7 +45,7 @@ export default function SubscribePageClient() {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch("/api/subscribe/verify-otp", {
+      const res = await fetch("/api/unsubscribe/verify-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp }),
@@ -65,10 +65,10 @@ export default function SubscribePageClient() {
   };
 
   return (
-    <div className="relative flex bg-background px-6 py-5 md:pt-14 md:pb-8">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -left-40 top-20 h-[500px] w-[500px] rounded-full bg-primary/10 blur-3xl" />
-        <div className="absolute -right-40 bottom-10 h-[500px] w-[500px] rounded-full bg-blue-500/10 blur-3xl" />
+    <div className="relative flex overflow-hidden bg-background px-6 pt-3 pb-5 md:pt-5 md:pb-8">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -left-40 top-20 h-[500px] w-[500px] rounded-full bg-red-500/10 blur-3xl" />
+        <div className="absolute -right-40 bottom-10 h-[500px] w-[500px] rounded-full bg-orange-500/10 blur-3xl" />
       </div>
 
       <div className="relative mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-6 lg:flex-row lg:items-start lg:gap-10">
@@ -76,10 +76,10 @@ export default function SubscribePageClient() {
           <div className="relative w-full max-w-[480px]">
             <Image
               src="/notifyme.png"
-              alt="Job notifications"
+              alt="Unsubscribe illustration"
               width={520}
               height={520}
-              className="h-auto w-full object-contain drop-shadow-xl lg:-mt-20"
+              className="h-auto w-full rotate-[-3deg] object-contain drop-shadow-xl lg:-mt-20"
               priority
             />
           </div>
@@ -93,20 +93,21 @@ export default function SubscribePageClient() {
                 className="mb-2 inline-flex items-center rounded-full bg-muted/50 px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to home
+                Back to jobs
               </Link>
 
               <h1 className="text-4xl font-extrabold tracking-tight text-foreground">
-                Stay <span className="text-primary">Updated</span>
+                Un<span className="text-red-500">subscribe</span>
               </h1>
 
               <p className="text-base text-muted-foreground">
-                Get curated job updates delivered straight to your inbox.
+                Stop receiving daily job alerts anytime with a quick
+                verification.
               </p>
             </div>
 
-            <div className="relative overflow-hidden rounded-3xl border border-border/50 bg-card/80 p-8 shadow-2xl shadow-primary/5 backdrop-blur-xl">
-              <div className="absolute top-0 left-0 h-1.5 w-full bg-gradient-to-r from-primary/40 via-primary to-primary/40" />
+            <div className="relative overflow-hidden rounded-3xl border border-border/50 bg-card/80 p-8 shadow-2xl shadow-red-500/5 backdrop-blur-xl">
+              <div className="absolute top-0 left-0 h-1.5 w-full bg-gradient-to-r from-red-500/40 via-red-500 to-red-500/40" />
 
               {step === "email" && (
                 <form onSubmit={handleRequestOtp} className="mt-2 space-y-6">
@@ -122,7 +123,7 @@ export default function SubscribePageClient() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="you@example.com"
-                        className="w-full rounded-xl border border-border/50 bg-background/50 py-3.5 pr-4 pl-12 outline-none transition-all focus:bg-background focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                        className="w-full rounded-xl border border-border/50 bg-background/50 py-3.5 pr-4 pl-12 outline-none transition-all focus:border-red-500 focus:bg-background focus:ring-2 focus:ring-red-500/20"
                       />
                     </div>
                   </div>
@@ -135,19 +136,13 @@ export default function SubscribePageClient() {
 
                   <button
                     disabled={loading}
-                    className="w-full rounded-xl bg-primary py-3.5 font-semibold text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:-translate-y-0.5 hover:opacity-90 disabled:pointer-events-none disabled:opacity-70"
+                    className="w-full rounded-xl bg-red-500 py-3.5 font-semibold text-white shadow-lg shadow-red-500/20 transition-all hover:-translate-y-0.5 hover:opacity-90 disabled:pointer-events-none disabled:opacity-70"
                   >
-                    {loading ? "Sending OTP..." : "Get Started"}
+                    {loading ? "Sending OTP..." : "Continue"}
                   </button>
 
                   <p className="mt-4 text-center text-sm text-muted-foreground">
-                    No spam. Unsubscribe anytime. <br />
-                    <Link
-                      href="/unsubscribe"
-                      className="mt-1.5 inline-block font-medium text-primary transition-all hover:underline"
-                    >
-                      Want to unsubscribe?
-                    </Link>
+                    Secure verification required to protect your account
                   </p>
                 </form>
               )}
@@ -155,8 +150,8 @@ export default function SubscribePageClient() {
               {step === "otp" && (
                 <form onSubmit={handleVerifyOtp} className="mt-2 space-y-6">
                   <div className="mb-4 flex flex-col items-center justify-center space-y-2">
-                    <div className="mb-1 rounded-full border border-green-500/20 bg-green-500/10 p-3">
-                      <ShieldCheck className="h-6 w-6 text-green-600" />
+                    <div className="mb-1 rounded-full border border-red-500/20 bg-red-500/10 p-3">
+                      <ShieldAlert className="h-6 w-6 text-red-500" />
                     </div>
                     <p className="text-center text-sm text-muted-foreground">
                       We&apos;ve sent a code to <br />
@@ -172,8 +167,8 @@ export default function SubscribePageClient() {
                       onChange={(e) =>
                         setOtp(e.target.value.replace(/[^0-9]/g, ""))
                       }
-                      placeholder="* * * * * *"
-                      className="w-full rounded-xl border border-border/50 bg-background/50 py-3 text-center text-2xl font-medium tracking-[0.5em] text-foreground outline-none transition-all focus:bg-background focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                      placeholder="• • • • • •"
+                      className="w-full rounded-xl border border-border/50 bg-background/50 py-3 text-center text-2xl font-medium tracking-[0.5em] text-foreground outline-none transition-all focus:border-red-500 focus:bg-background focus:ring-2 focus:ring-red-500/20"
                     />
                   </div>
 
@@ -185,9 +180,9 @@ export default function SubscribePageClient() {
 
                   <button
                     disabled={loading}
-                    className="w-full rounded-xl bg-primary py-3.5 font-semibold text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:-translate-y-0.5 hover:opacity-90 disabled:pointer-events-none disabled:opacity-70"
+                    className="w-full rounded-xl bg-red-500 py-3.5 font-semibold text-white shadow-lg shadow-red-500/20 transition-all hover:-translate-y-0.5 hover:opacity-90 disabled:pointer-events-none disabled:opacity-70"
                   >
-                    {loading ? "Verifying..." : "Verify & Subscribe"}
+                    {loading ? "Verifying..." : "Confirm Unsubscribe"}
                   </button>
 
                   <button
@@ -209,19 +204,19 @@ export default function SubscribePageClient() {
 
                   <div className="space-y-2">
                     <h2 className="text-3xl font-bold text-foreground">
-                      You&apos;re ready to go!
+                      You&apos;re unsubscribed
                     </h2>
                     <p className="text-muted-foreground">
-                      You&apos;ll receive your first job alert at 6 PM today. Keep an
-                      eye on your inbox!
+                      <span className="font-medium text-foreground">{email}</span>{" "}
+                      has been removed successfully.
                     </p>
                   </div>
 
                   <Link
-                    href="/jobs"
-                    className="mt-4 inline-block w-full rounded-xl bg-primary py-3.5 font-semibold text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:-translate-y-0.5 hover:opacity-90"
+                    href="/"
+                    className="mt-4 inline-block w-full rounded-xl border border-border/50 bg-background py-3.5 font-semibold shadow-sm transition-all hover:-translate-y-0.5 hover:bg-muted"
                   >
-                    Browse Jobs Now
+                    Return Home
                   </Link>
                 </div>
               )}

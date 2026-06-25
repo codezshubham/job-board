@@ -8,9 +8,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const jobs = await getJobs();
 
   // Create job URLs
-  const jobUrls = jobs.map((job: any) => ({
+  const jobUrls = jobs.map((job: { slug: string; updatedAt?: string; createdAt?: string }) => ({
     url: `${baseUrl}/jobs/${job.slug}`,
-    lastModified: new Date(job.updatedAt || job.createdAt),
+    lastModified: new Date(job.updatedAt || job.createdAt || Date.now()),
     changeFrequency: 'weekly' as const,
     priority: 0.8,
   }));
@@ -28,6 +28,36 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/fresher-jobs`,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/remote-jobs`,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/hybrid-jobs`,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/experienced-jobs`,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/on-site-jobs`,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/companies`,

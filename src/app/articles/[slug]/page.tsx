@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, ArrowRight, Clock3 } from "lucide-react";
 import { articles, getArticleBySlug } from "@/lib/articles";
+import { createPageMetadata } from "@/lib/seo";
 
 type ArticlePageProps = {
   params: Promise<{ slug: string }>;
@@ -29,9 +30,26 @@ export async function generateMetadata(
   }
 
   return {
-    title: article.title,
-    description: article.excerpt,
+    ...createPageMetadata({
+      title: article.title,
+      description: article.excerpt,
+      canonical: `/articles/${article.slug}`,
+      keywords: [
+        article.title,
+        article.category,
+        "career guide",
+        "job search article",
+        "RojgarSync articles",
+      ],
+    }),
   };
+}
+
+function toSectionId(heading: string) {
+  return heading
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
 export default async function ArticleDetailPage(props: ArticlePageProps) {
@@ -80,13 +98,39 @@ export default async function ArticleDetailPage(props: ArticlePageProps) {
 
       <section className="container mx-auto max-w-4xl px-4 py-16">
         <div className="space-y-8">
+          <Card className="rounded-3xl border bg-secondary/20 shadow-none">
+            <CardContent className="p-8">
+              <h2 className="text-xl font-bold tracking-tight">
+                In this article
+              </h2>
+
+              <div className="mt-5 grid gap-3 md:grid-cols-2">
+                {article.sections.map((section, index) => (
+                  <a
+                    key={section.heading}
+                    href={`#${toSectionId(section.heading)}`}
+                    className="rounded-2xl border bg-background px-4 py-3 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                  >
+                    <span className="mr-2 font-semibold text-foreground/80">
+                      {index + 1}.
+                    </span>
+                    {section.heading}
+                  </a>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
           {article.sections.map((section) => (
             <Card
               key={section.heading}
               className="rounded-3xl border bg-background shadow-sm"
             >
               <CardContent className="p-8">
-                <h2 className="text-2xl font-bold tracking-tight">
+                <h2
+                  id={toSectionId(section.heading)}
+                  className="scroll-mt-24 text-2xl font-bold tracking-tight"
+                >
                   {section.heading}
                 </h2>
 

@@ -27,7 +27,7 @@ export default function NotFound() {
       </h2>
       
       <p className="text-muted-foreground text-lg max-w-md mx-auto mb-10 leading-relaxed">
-        Oops! We couldn't find the page or job listing you're looking for. It might have been removed, renamed, or is temporarily unavailable.
+        Oops! We couldn&apos;t find the page or job listing you&apos;re looking for. It might have been removed, renamed, or is temporarily unavailable.
       </p>
 
       <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">

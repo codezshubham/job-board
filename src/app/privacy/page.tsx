@@ -12,12 +12,20 @@ import {
   TriangleAlert,
   Trash2,
 } from "lucide-react";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Privacy Policy",
   description:
     "Read our privacy policy to understand how we collect, use, and protect your information when you use RojgarSync.",
-};
+  canonical: "/privacy",
+  keywords: [
+    "RojgarSync privacy policy",
+    "job platform privacy",
+    "data protection",
+    "email alerts privacy",
+  ],
+});
 
 const sections = [
   {

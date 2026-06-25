@@ -1,5 +1,4 @@
 import { getAuthSession } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import LogoutButton from "@/components/LogoutButton";

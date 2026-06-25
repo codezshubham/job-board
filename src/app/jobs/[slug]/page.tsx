@@ -1,12 +1,38 @@
+/* eslint-disable @next/next/no-img-element */
 import { getJobBySlug, getJobs } from "@/app/actions/jobActions";
 import { notFound } from "next/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { TelegramIcon } from "@/components/TelegramCta";
-import { MapPin, IndianRupee, Clock, Briefcase, ExternalLink, ChevronLeft, GraduationCap, CalendarDays, Building2, Tag, Globe, Users, Send } from "lucide-react";
+import { MapPin, IndianRupee, Clock, Briefcase, ExternalLink, GraduationCap, CalendarDays, Building2, Tag, Globe, Users, Send } from "lucide-react";
 import Link from "next/link";
 import { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo";
+
+type JobPageData = {
+  _id: string;
+  slug: string;
+  title: string;
+  company: string;
+  location: string;
+  salary: string;
+  description: string;
+  skills: string[];
+  applyUrl: string;
+  category: string;
+  employmentType: string;
+  logo?: string;
+  aboutCompany?: string;
+  experience?: string;
+  rolesAndResponsibilities?: string;
+  education?: string;
+  workMode?: string;
+  batchEligible?: string[];
+  closingDate?: string;
+  createdAt: string;
+  updatedAt?: string;
+};
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -16,43 +42,76 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const shortDescription = job.description ? job.description.substring(0, 160) : `Apply for ${job.title} at ${job.company}`;
 
   return {
-    title: `${job.title} at ${job.company}`,
-    description: shortDescription,
+    ...createPageMetadata({
+      title: `${job.title} at ${job.company}`,
+      description: shortDescription,
+      canonical: `/jobs/${slug}`,
       keywords: [
-      job.title,
-      job.company,
-      job.location || "",
-      "jobs",
-      "latest jobs",
-      "software jobs",
-      "remote jobs",
-      "hybrid jobs",
-      "on-site jobs",
-      "freshers jobs",
-      "graduate jobs",
-      "internship jobs",
-      "entry-level jobs",
-      "experienced jobs",
-      "IT jobs",
-      "job portal",
-      "RojgarSync",
-      `${job.title} jobs`,
-      `${job.company} careers`,
+        job.title,
+        job.company,
+        job.location || "",
+        "jobs",
+        "latest jobs",
+        "software jobs",
+        "remote jobs",
+        "hybrid jobs",
+        "on-site jobs",
+        "freshers jobs",
+        "graduate jobs",
+        "internship jobs",
+        "entry-level jobs",
+        "experienced jobs",
+        "IT jobs",
+        "job portal",
+        "RojgarSync",
+        `${job.title} jobs`,
+        `${job.company} careers`,
+      ],
+    }),
+      keywords: [
+        job.title,
+        job.company,
+        job.location || "",
+        "jobs",
+        "latest jobs",
+        "software jobs",
+        "remote jobs",
+        "hybrid jobs",
+        "on-site jobs",
+        "freshers jobs",
+        "graduate jobs",
+        "internship jobs",
+        "entry-level jobs",
+        "experienced jobs",
+        "IT jobs",
+        "job portal",
+        "RojgarSync",
+        `${job.title} jobs`,
+        `${job.company} careers`,
     ],
     openGraph: {
-      title: `${job.title} | ${job.company}`,
+      title: `${job.title} at ${job.company}`,
       description: shortDescription,
       url: `/jobs/${slug}`,
       siteName: "RojgarSync",
-      images: job.logo ? [{ url: job.logo, alt: `${job.company} logo` }] : [],
+      images: job.logo
+        ? [{ url: job.logo, alt: `${job.company} logo` }]
+        : [
+            {
+              url: "/Rojgarog-image.png",
+              width: 1200,
+              height: 630,
+              alt: `${job.title} at ${job.company}`,
+            },
+          ],
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: `${job.title} | ${job.company}`,
+      title: `${job.title} at ${job.company}`,
       description: shortDescription,
-      images: job.logo ? [job.logo] : [],
-    }
+      images: job.logo ? [job.logo] : ["/Rojgarog-image.png"],
+    },
   };
 }
 
@@ -61,17 +120,22 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
   
   // Use Promise.all to fetch the job details AND the latest jobs concurrently 
   // instead of waiting for one to finish before starting the other.
-  const [job, latestJobsData] = await Promise.all([
+  const [jobData, latestJobsData] = await Promise.all([
     getJobBySlug(slug),
     getJobs({}, { createdAt: -1 }, 6)
   ]);
+
+  const job = jobData as JobPageData | null;
+  const latestJobsSource = latestJobsData as JobPageData[];
 
   if (!job) {
     notFound();
   }
 
   // Filter out the current job from the recent jobs list
-  const latestJobs = latestJobsData.filter((j: any) => j._id !== job._id).slice(0, 5);
+  const latestJobs = latestJobsSource
+    .filter((recentJob) => recentJob._id !== job._id)
+    .slice(0, 5);
 
   // Helper to render text with newlines as a bulleted list
   const renderBulletList = (text: string) => {
@@ -141,7 +205,7 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
 
         {/* Duplicate array for seamless loop */}
         {[...latestJobs.slice(0, 3), ...latestJobs.slice(0, 3)].map(
-          (recentJob: any, index: number) => (
+          (recentJob, index: number) => (
             <div
               key={`${recentJob._id}-${index}`}
               className="mx-5 flex items-center"
@@ -394,7 +458,7 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
         <div className="mt-16 md:mt-24 border-t pt-12">
           <h2 className="text-3xl font-bold mb-8 tracking-tight">Latest Jobs</h2>
           <div className="flex flex-col gap-4">
-            {latestJobs.map((latestJob: any) => (
+            {latestJobs.map((latestJob) => (
               <Card key={latestJob._id} className="hover:shadow-md transition-shadow">
                 <CardContent className="p-6">
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">

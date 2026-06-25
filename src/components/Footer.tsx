@@ -43,22 +43,22 @@ export function Footer() {
             </h3>
             <ul className="space-y-4">
               <li>
-                <Link href="/jobs?workMode=Remote" className="text-muted-foreground transition-colors hover:text-primary">
+                <Link href="/remote-jobs" className="text-muted-foreground transition-colors hover:text-primary">
                   Remote Jobs
                 </Link>
               </li>
               <li>
-                <Link href="/jobs?workMode=On-site" className="text-muted-foreground transition-colors hover:text-primary">
+                <Link href="/on-site-jobs" className="text-muted-foreground transition-colors hover:text-primary">
                   Onsite Jobs
                 </Link>
               </li>
               <li>
-                <Link href="/jobs?experience=Fresher" className="text-muted-foreground transition-colors hover:text-primary">
+                <Link href="/fresher-jobs" className="text-muted-foreground transition-colors hover:text-primary">
                   Fresher Jobs
                 </Link>
               </li>
               <li>
-                <Link href="/jobs?experience=Experienced" className="text-muted-foreground transition-colors hover:text-primary">
+                <Link href="/experienced-jobs" className="text-muted-foreground transition-colors hover:text-primary">
                   Experienced Jobs
                 </Link>
               </li>

@@ -1,10 +1,21 @@
+/* eslint-disable @next/next/no-img-element */
 import { Metadata } from "next";
 import { Card, CardContent } from "@/components/ui/card";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Companies",
-  description: "Explore opportunities from top companies hiring on our platform.",
-};
+export const metadata: Metadata = createPageMetadata({
+  title: "Companies Hiring on RojgarSync",
+  description:
+    "Explore companies hiring on RojgarSync and browse active opportunities by employer across fresher, remote, hybrid, and on-site roles.",
+  canonical: "/companies",
+  keywords: [
+    "companies hiring",
+    "hiring companies in India",
+    "employer job listings",
+    "RojgarSync companies",
+    "company careers",
+  ],
+});
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import {
@@ -18,13 +29,24 @@ import { getJobs } from "@/app/actions/jobActions";
 
 export const revalidate = 60;
 
+type CompanyListingJob = {
+  company: string;
+  logo?: string;
+};
+
+type CompanySummary = {
+  name: string;
+  logo?: string;
+  jobCount: number;
+};
+
 export default async function CompaniesPage() {
-  const jobs = await getJobs();
+  const jobs = (await getJobs()) as CompanyListingJob[];
 
   // Extract unique companies
-  const companyMap = new Map();
+  const companyMap = new Map<string, CompanySummary>();
 
-  jobs.forEach((job: any) => {
+  jobs.forEach((job) => {
     if (!companyMap.has(job.company)) {
       companyMap.set(job.company, {
         name: job.company,
@@ -32,7 +54,10 @@ export default async function CompaniesPage() {
         jobCount: 1,
       });
     } else {
-      companyMap.get(job.company).jobCount += 1;
+      const existingCompany = companyMap.get(job.company);
+      if (existingCompany) {
+        existingCompany.jobCount += 1;
+      }
     }
   });
 

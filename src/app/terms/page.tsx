@@ -12,12 +12,20 @@ import {
   RefreshCw,
   Gavel,
 } from "lucide-react";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Terms & Conditions",
   description:
     "Review the terms and conditions that govern the use of RojgarSync and related services.",
-};
+  canonical: "/terms",
+  keywords: [
+    "RojgarSync terms",
+    "job platform terms and conditions",
+    "user responsibilities",
+    "job listing terms",
+  ],
+});
 
 const sections = [
   {

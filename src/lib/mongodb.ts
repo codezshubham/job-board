@@ -1,16 +1,24 @@
-import mongoose from 'mongoose';
+import mongoose, { type Mongoose } from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI!;
+type MongooseCache = {
+  conn: Mongoose | null;
+  promise: Promise<Mongoose> | null;
+};
 
-if (!MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
+declare global {
+  var mongooseCache: MongooseCache | undefined;
 }
 
-let cached = (global as any).mongoose;
+const mongooseUri = process.env.MONGODB_URI;
 
-if (!cached) {
-  cached = (global as any).mongoose = { conn: null, promise: null };
+if (!mongooseUri) {
+  throw new Error("Please define the MONGODB_URI environment variable inside .env.local");
 }
+
+const MONGODB_URI = mongooseUri;
+
+const cached = globalThis.mongooseCache ?? { conn: null, promise: null };
+globalThis.mongooseCache = cached;
 
 async function dbConnect() {
   if (cached.conn) {

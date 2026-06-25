@@ -1,6 +1,7 @@
 import { getAuthSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { getJobs, deleteJob } from "@/app/actions/jobActions";
+import type { SerializedJob } from "@/lib/job-types";
 import Link from "next/link";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
@@ -22,7 +23,7 @@ export default async function AdminDashboard() {
     redirect("/admin-x8k9p2m-vault-92hf7q-secure-core-a81mz/login");
   }
 
-  const jobs = await getJobs();
+  const jobs: SerializedJob[] = await getJobs();
 
   return (
     <div>
@@ -46,13 +47,13 @@ export default async function AdminDashboard() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {jobs.map((job: any) => (
+            {jobs.map((job) => (
               <TableRow key={job._id}>
                 <TableCell className="font-medium">{job.title}</TableCell>
                 <TableCell>{job.company}</TableCell>
                 <TableCell>{job.location}</TableCell>
                 <TableCell>
-                  {new Date(job.createdAt).toLocaleDateString()}
+                  {job.createdAt ? new Date(job.createdAt).toLocaleDateString() : "N/A"}
                 </TableCell>
                 <TableCell>
                   {job.closingDate ? new Date(job.closingDate).toLocaleDateString() : 'N/A'}
@@ -77,7 +78,7 @@ export default async function AdminDashboard() {
             {jobs.length === 0 && (
               <TableRow>
                 <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
-                  No jobs found. Click "Add New Job" to get started.
+                  No jobs found. Click &quot;Add New Job&quot; to get started.
                 </TableCell>
               </TableRow>
             )}

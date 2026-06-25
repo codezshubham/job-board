@@ -14,7 +14,6 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { HomeFaqs } from "@/components/HomeFaqs";
-import { HomeFeedback } from "@/components/HomeFeedback";
 
 export default function Home() {
   return (
@@ -35,7 +34,9 @@ export default function Home() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-primary" />
             </span>
-            <span className="font-semibold tracking-wide">12,000+ Active Jobs Updated Daily</span>
+            <span className="font-semibold tracking-wide">
+              Fresh roles from trusted companies
+            </span>
           </div>
 
           {/* Heading */}
@@ -199,13 +200,17 @@ export default function Home() {
 
                 <div className="flex gap-8">
                   <div>
-                    <h4 className="text-3xl font-black">10K+</h4>
-                    <p className="text-sm text-muted-foreground">Active Jobs</p>
+                    <h4 className="text-3xl font-black">Verified</h4>
+                    <p className="text-sm text-muted-foreground">
+                      Job Listings
+                    </p>
                   </div>
 
                   <div>
-                    <h4 className="text-3xl font-black">2K+</h4>
-                    <p className="text-sm text-muted-foreground">Companies</p>
+                    <h4 className="text-3xl font-black">Trusted</h4>
+                    <p className="text-sm text-muted-foreground">
+                      Hiring Companies
+                    </p>
                   </div>
                 </div>
               </div>
@@ -230,8 +235,8 @@ export default function Home() {
             </h2>
 
             <p className="text-lg opacity-90 max-w-2xl mx-auto">
-              Explore thousands of verified opportunities and connect with
-              companies building the future.
+              Explore verified opportunities and connect with companies
+              building the future.
             </p>
 
             <Button
@@ -247,9 +252,6 @@ export default function Home() {
           </CardContent>
         </Card>
       </section>
-
-      <HomeFeedback />
-
       <HomeFaqs />
     </div>
   );

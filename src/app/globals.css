@@ -125,39 +125,3 @@
     @apply bg-background text-foreground;
   }
 }
-
-.feedback-marquee-track {
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  will-change: transform;
-}
-
-.feedback-marquee-up {
-  animation-name: feedback-marquee-up;
-}
-
-.feedback-marquee-down {
-  animation-name: feedback-marquee-up;
-  animation-direction: reverse;
-}
-
-.feedback-marquee-duration-slow {
-  animation-duration: 26s;
-}
-
-.feedback-marquee-duration-medium {
-  animation-duration: 22s;
-}
-
-.feedback-marquee-duration-fast {
-  animation-duration: 24s;
-}
-
-@keyframes feedback-marquee-up {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(-50%);
-  }
-}

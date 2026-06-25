@@ -10,12 +10,20 @@ import {
   ShieldAlert,
   UserRoundSearch,
 } from "lucide-react";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Disclaimer",
   description:
     "Read the RojgarSync disclaimer about informational content, third-party job listings, verification responsibilities, and platform limitations.",
-};
+  canonical: "/disclaimer",
+  keywords: [
+    "RojgarSync disclaimer",
+    "job listing disclaimer",
+    "job verification notice",
+    "third party listings",
+  ],
+});
 
 const sections = [
   {

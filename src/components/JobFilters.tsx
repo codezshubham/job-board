@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { useCallback, useState, useEffect } from "react";
+import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
@@ -18,21 +18,8 @@ export function JobFilters() {
   const [category, setCategory] = useState(searchParams.get("category") || "All Categories");
   const [experience, setExperience] = useState(searchParams.get("experience") || "All Experience Levels");
 
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      if (value) {
-        params.set(name, value);
-      } else {
-        params.delete(name);
-      }
-      return params.toString();
-    },
-    [searchParams]
-  );
-
   const handleApplyFilters = () => {
-    let params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams(searchParams.toString());
     
     if (search) params.set("search", search);
     else params.delete("search");

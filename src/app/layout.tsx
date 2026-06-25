@@ -240,19 +240,19 @@ export default function RootLayout({
                       <Link href="/jobs" className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground">
                         All Jobs
                       </Link>
-                      <Link href="/jobs?workMode=Remote" className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground">
+                      <Link href="/remote-jobs" className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground">
                         Remote Jobs
                       </Link>
-                      <Link href="/jobs?experience=Fresher" className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground">
+                      <Link href="/fresher-jobs" className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground">
                         Fresher Jobs
                       </Link>
-                      <Link href="/jobs?workMode=Hybrid" className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground">
+                      <Link href="/hybrid-jobs" className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground">
                         Hybrid Jobs
                       </Link>
-                      <Link href="/jobs?workMode=On-site" className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground">
+                      <Link href="/on-site-jobs" className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground">
                         On-site Jobs
                       </Link>
-                      <Link href="/jobs?experience=Experienced" className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground">
+                      <Link href="/experienced-jobs" className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground">
                         Experienced Jobs
                       </Link>
                     </div>

@@ -1,11 +1,21 @@
+import type { Metadata } from "next";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mail, MessageCircle, MapPin, Globe } from "lucide-react";
+import { Mail, MessageCircle } from "lucide-react";
 import Link from "next/link";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Contact Us | RojgarSync",
-  description: "Get in touch with the RojgarSync team for support, partnerships, or general inquiries.",
-};
+export const metadata: Metadata = createPageMetadata({
+  title: "Contact RojgarSync",
+  description:
+    "Get in touch with the RojgarSync team for support, fake-job reports, partnerships, or general job platform inquiries.",
+  canonical: "/contact",
+  keywords: [
+    "contact RojgarSync",
+    "report fake job",
+    "job platform support",
+    "RojgarSync email",
+  ],
+});
 
 export default function ContactPage() {
   return (
@@ -13,7 +23,7 @@ export default function ContactPage() {
       <div className="text-center mb-12">
         <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl mb-4">Get in Touch</h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Have a question, feedback, or want to partner with us? We'd love to hear from you. 
+          Have a question, feedback, or want to partner with us? We&apos;d love to hear from you. 
           Reach out to us through any of the channels below.
         </p>
       </div>

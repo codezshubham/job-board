@@ -45,27 +45,27 @@ export function MobileNav() {
     },
     {
       title: "Remote Jobs",
-      href: "/jobs?workMode=Remote",
+      href: "/remote-jobs",
       icon: BriefcaseBusiness,
     },
     {
       title: "Fresher Jobs",
-      href: "/jobs?experience=Fresher",
+      href: "/fresher-jobs",
       icon: BriefcaseBusiness,
     },
     {
       title: "Hybrid Jobs",
-      href: "/jobs?workMode=Hybrid",
+      href: "/hybrid-jobs",
       icon: BriefcaseBusiness,
     },
     {
       title: "Onsite Jobs",
-      href: "/jobs?workMode=On-site",
+      href: "/on-site-jobs",
       icon: BriefcaseBusiness,
     },
     {
       title: "Experienced Jobs",
-      href: "/jobs?experience=Experienced",
+      href: "/experienced-jobs",
       icon: BriefcaseBusiness,
     },
   ];
