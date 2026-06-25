@@ -8,31 +8,8 @@ import { TelegramIcon } from "@/components/TelegramCta";
 import { MapPin, IndianRupee, Clock, Briefcase, ExternalLink, GraduationCap, CalendarDays, Building2, Tag, Globe, Users, Send } from "lucide-react";
 import Link from "next/link";
 import { Metadata } from "next";
+import type { SerializedJob } from "@/lib/job-types";
 import { createPageMetadata } from "@/lib/seo";
-
-type JobPageData = {
-  _id: string;
-  slug: string;
-  title: string;
-  company: string;
-  location: string;
-  salary: string;
-  description: string;
-  skills: string[];
-  applyUrl: string;
-  category: string;
-  employmentType: string;
-  logo?: string;
-  aboutCompany?: string;
-  experience?: string;
-  rolesAndResponsibilities?: string;
-  education?: string;
-  workMode?: string;
-  batchEligible?: string[];
-  closingDate?: string;
-  createdAt: string;
-  updatedAt?: string;
-};
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -125,8 +102,8 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
     getJobs({}, { createdAt: -1 }, 6)
   ]);
 
-  const job = jobData as JobPageData | null;
-  const latestJobsSource = latestJobsData as JobPageData[];
+  const job = jobData as SerializedJob | null;
+  const latestJobsSource = latestJobsData as SerializedJob[];
 
   if (!job) {
     notFound();
@@ -371,6 +348,15 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
                     </div>
                   </div>
                 )}
+              </div>
+            </section>
+          )}
+
+          {job.whyThisRoleMayBeUseful && (
+            <section className="bg-card border rounded-2xl p-6 md:p-8 shadow-sm">
+              <h2 className="text-2xl font-bold mb-6">Why This Role May Be Useful</h2>
+              <div className="prose dark:prose-invert max-w-none text-muted-foreground leading-relaxed">
+                {renderBulletList(job.whyThisRoleMayBeUseful)}
               </div>
             </section>
           )}

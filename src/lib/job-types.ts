@@ -16,6 +16,7 @@ export interface SerializedJob {
   aboutCompany?: string;
   experience?: string;
   rolesAndResponsibilities?: string;
+  whyThisRoleMayBeUseful?: string;
   education?: string;
   workMode?: WorkMode;
   batchEligible?: string[];
@@ -36,6 +37,7 @@ export interface JobMutationInput {
   aboutCompany: string;
   experience: string;
   rolesAndResponsibilities: string;
+  whyThisRoleMayBeUseful: string;
   education: string;
   workMode: WorkMode;
   batchEligible: string[];

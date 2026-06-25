@@ -29,6 +29,7 @@ export default function JobForm({ initialData = null }: JobFormProps) {
     aboutCompany: initialData?.aboutCompany || "",
     experience: initialData?.experience || "",
     rolesAndResponsibilities: initialData?.rolesAndResponsibilities || "",
+    whyThisRoleMayBeUseful: initialData?.whyThisRoleMayBeUseful || "",
     education: initialData?.education || "",
     workMode: initialData?.workMode || "On-site",
     batchEligible: initialData?.batchEligible || [],
@@ -166,6 +167,17 @@ export default function JobForm({ initialData = null }: JobFormProps) {
         <div className="space-y-2 md:col-span-2">
           <Label htmlFor="rolesAndResponsibilities">Roles & Responsibilities (Optional)</Label>
           <Textarea id="rolesAndResponsibilities" name="rolesAndResponsibilities" rows={5} value={formData.rolesAndResponsibilities} onChange={handleChange} />
+        </div>
+        <div className="space-y-2 md:col-span-2">
+          <Label htmlFor="whyThisRoleMayBeUseful">Why This Role May Be Useful (Optional)</Label>
+          <Textarea
+            id="whyThisRoleMayBeUseful"
+            name="whyThisRoleMayBeUseful"
+            rows={5}
+            value={formData.whyThisRoleMayBeUseful}
+            onChange={handleChange}
+            placeholder="Explain why this role could be valuable for a candidate's growth, learning, career switch, or long-term goals."
+          />
         </div>
         <div className="space-y-2 md:col-span-2">
           <Label htmlFor="education">Education Requirements (Optional)</Label>

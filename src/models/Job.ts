@@ -16,6 +16,7 @@ export interface IJob {
   aboutCompany?: string;
   experience?: string;
   rolesAndResponsibilities?: string;
+  whyThisRoleMayBeUseful?: string;
   education?: string;
   workMode?: string;
   batchEligible?: string[];
@@ -40,6 +41,7 @@ const JobSchema = new mongoose.Schema<IJob>(
     aboutCompany: { type: String },
     experience: { type: String },
     rolesAndResponsibilities: { type: String },
+    whyThisRoleMayBeUseful: { type: String },
     education: { type: String },
     workMode: { type: String, enum: ["Remote", "Hybrid", "On-site"], default: "On-site" },
     batchEligible: { type: [String], default: [] },
